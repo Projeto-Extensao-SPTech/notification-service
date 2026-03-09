@@ -1,4 +1,7 @@
 package com.notification_service.domain.entity;
 
-public class NotificationRecurrence {
-}
+import java.time.LocalDate;
+
+public record NotificationRecurrence(
+        LocalDate recurrence
+) {}

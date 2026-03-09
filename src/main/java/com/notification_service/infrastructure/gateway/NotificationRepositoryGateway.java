@@ -21,4 +21,16 @@ public class NotificationRepositoryGateway implements NotificationGateway {
         NotificationEntity savedNotification = notificationRepository.save(notificationEntity);
         return notificationEntityMapper.toDomain(savedNotification);
     }
+
+    @Override
+    public Notification findById(Long id) {
+        return notificationRepository.findById(id)
+                .map(notificationEntityMapper::toDomain)
+                .orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+        notificationRepository.deleteById(id);
+    }
 }
