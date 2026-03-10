@@ -4,6 +4,7 @@ import com.notification_service.application.dto.NotificationMapperDTO;
 import com.notification_service.application.gateway.NotificationGateway;
 import com.notification_service.application.usecases.notification.CreateNotification;
 import com.notification_service.application.usecases.notification.DeleteNotification;
+import com.notification_service.application.usecases.notification.GetNotification;
 import com.notification_service.application.usecases.notification.GetNotificationById;
 import com.notification_service.infrastructure.gateway.NotificationEntityMapper;
 import com.notification_service.infrastructure.gateway.NotificationRepositoryGateway;
@@ -22,6 +23,11 @@ public class NotificationConfig {
     @Bean
     GetNotificationById getNotificationById(NotificationGateway notificationGateway){
         return new GetNotificationById(notificationGateway);
+    }
+
+    @Bean
+    GetNotification getNotification(NotificationGateway notificationGateway){
+        return new GetNotification(notificationGateway);
     }
 
     @Bean
