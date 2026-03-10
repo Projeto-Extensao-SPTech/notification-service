@@ -1,6 +1,7 @@
 package com.notification_service.infrastructure.queue;
 
 import com.notification_service.application.usecases.notification.CreateNotification;
+import com.notification_service.config.rabbitmq.RabbitMQConfig;
 import com.notification_service.domain.entity.Notification;
 import com.notification_service.domain.entity.NotificationRecurrence;
 import com.notification_service.domain.enums.NotificationType;
@@ -19,7 +20,7 @@ public class NotificationCreatedListener {
         this.createNotification = createNotification;
     }
 
-    @RabbitListener(queues = "notification.queue")
+    @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_QUEUE)
     public void listenNotificationCreatedEvent(NotificationCreatedEventMessage event) {
         List<NotificationRecurrence> recurrences = event.recurrence().stream()
                 .map(NotificationRecurrence::new)

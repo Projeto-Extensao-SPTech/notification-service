@@ -2,8 +2,6 @@ package com.notification_service.infrastructure.persistence;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "notification_recurrence_tb")
 public class NotificationRecurrenceEntity {
@@ -12,7 +10,7 @@ public class NotificationRecurrenceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate recurrence;
+    private Integer recurrence;
 
     @ManyToOne
     @JoinColumn(name = "notification_id")
@@ -20,7 +18,7 @@ public class NotificationRecurrenceEntity {
 
     protected NotificationRecurrenceEntity(){}
 
-    public NotificationRecurrenceEntity(LocalDate recurrence) {
+    public NotificationRecurrenceEntity(Integer recurrence) {
         this.recurrence = recurrence;
     }
 
@@ -28,7 +26,7 @@ public class NotificationRecurrenceEntity {
         this.notification = notification;
     }
 
-    public LocalDate getRecurrence() {
+    public Integer getRecurrence() {
         return recurrence;
     }
 

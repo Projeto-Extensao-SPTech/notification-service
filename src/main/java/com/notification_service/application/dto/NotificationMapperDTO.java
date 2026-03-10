@@ -5,14 +5,13 @@ import com.notification_service.application.dto.response.CreateNotificationRespo
 import com.notification_service.domain.entity.Notification;
 import com.notification_service.domain.entity.NotificationRecurrence;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 public class NotificationMapperDTO {
     public CreateNotificationResponse toResponse(Notification notification) {
 
-        List<LocalDate> recurrences = notification.notificationRecurrences()
+        List<Integer> recurrences = notification.notificationRecurrences()
                 .stream()
                 .map(NotificationRecurrence::recurrence)
                 .toList();

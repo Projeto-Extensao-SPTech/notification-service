@@ -10,6 +10,6 @@ public record CreateNotificationRequest (
         Long fairId,
         String message,
         LocalDate eventDate,
-        List<LocalDate> recurrence
+        List<Integer> recurrence
 ){
 }
