@@ -5,6 +5,8 @@ import com.notification_service.domain.entity.Notification;
 import com.notification_service.infrastructure.persistence.NotificationEntity;
 import com.notification_service.infrastructure.persistence.NotificationRepository;
 
+import java.util.List;
+
 public class NotificationRepositoryGateway implements NotificationGateway {
 
     private final NotificationRepository notificationRepository;
@@ -27,6 +29,14 @@ public class NotificationRepositoryGateway implements NotificationGateway {
         return notificationRepository.findById(id)
                 .map(notificationEntityMapper::toDomain)
                 .orElse(null);
+    }
+
+    @Override
+    public List<Notification> findAll() {
+        return notificationRepository.findAll()
+                .stream()
+                .map(notificationEntityMapper::toDomain)
+                .toList();
     }
 
     @Override

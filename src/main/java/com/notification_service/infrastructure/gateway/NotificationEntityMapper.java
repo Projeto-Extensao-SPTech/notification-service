@@ -25,7 +25,6 @@ public class NotificationEntityMapper {
         return notificationEntity;
     }
 
-
     public Notification toDomain(NotificationEntity notificationEntity) {
 
         var recurrences = notificationEntity.getNotificationRecurrence()

@@ -6,11 +6,14 @@ import com.notification_service.application.dto.response.CreateNotificationRespo
 import com.notification_service.application.dto.response.NotificationResponse;
 import com.notification_service.application.usecases.notification.CreateNotification;
 import com.notification_service.application.usecases.notification.DeleteNotification;
+import com.notification_service.application.usecases.notification.GetNotification;
 import com.notification_service.application.usecases.notification.GetNotificationById;
 import com.notification_service.domain.entity.Notification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/notification")
 @RestController
@@ -18,6 +21,7 @@ public class NotificationController {
 
     private final CreateNotification createNotificationUseCase;
     private final GetNotificationById getNotificationById;
+    private final GetNotification getNotification;
     private final DeleteNotification deleteNotification;
     private final NotificationMapperDTO notificationMapperDTO;
 
@@ -25,12 +29,14 @@ public class NotificationController {
             CreateNotification createNotificationUseCase,
             NotificationMapperDTO notificationMapperDTO,
             GetNotificationById getNotificationById,
-            DeleteNotification deleteNotification
+            DeleteNotification deleteNotification,
+            GetNotification getNotification
     ) {
         this.createNotificationUseCase = createNotificationUseCase;
         this.notificationMapperDTO = notificationMapperDTO;
         this.getNotificationById = getNotificationById;
         this.deleteNotification = deleteNotification;
+        this.getNotification = getNotification;
     }
 
     @PostMapping
@@ -46,15 +52,20 @@ public class NotificationController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<NotificationResponse> getNotificationById(@PathVariable Long id){
+    private ResponseEntity<NotificationResponse> getNotificationById(@PathVariable Long id) {
         var response = getNotificationById.execute(id);
         return ResponseEntity
                 .ok()
                 .body(response);
     }
 
+    @GetMapping
+    private List<NotificationResponse> getAllNotification() {
+        return getNotification.execute();
+    }
+
     @DeleteMapping("/{id}")
-    private void delete(@PathVariable Long id){
+    private void delete(@PathVariable Long id) {
         deleteNotification.execute(id);
     }
 }
