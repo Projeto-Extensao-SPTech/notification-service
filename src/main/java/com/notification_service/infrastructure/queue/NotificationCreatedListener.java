@@ -22,20 +22,18 @@ public class NotificationCreatedListener {
 
     @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_QUEUE)
     public void listenNotificationCreatedEvent(NotificationCreatedEventMessage event) {
-        List<NotificationRecurrence> recurrences = event.recurrence().stream()
-                .map(NotificationRecurrence::new)
-                .toList();
+        List<Integer> recurrences = event.recurrence();
 
         Notification notification = new Notification(
                 null,
                 NotificationType.valueOf(event.notificationType()),
                 event.fairId(),
-                recurrences,
+                List.of(),
                 event.message(),
                 event.eventDate(),
                 ZonedDateTime.now()
         );
 
-        createNotification.execute(notification);
+        createNotification.execute(notification, recurrences);
     }
 }

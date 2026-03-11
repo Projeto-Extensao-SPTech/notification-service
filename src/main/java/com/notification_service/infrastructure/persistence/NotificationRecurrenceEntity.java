@@ -1,6 +1,9 @@
 package com.notification_service.infrastructure.persistence;
 
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "notification_recurrence_tb")
@@ -10,7 +13,7 @@ public class NotificationRecurrenceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer recurrence;
+    private LocalDate recurrence;
 
     @ManyToOne
     @JoinColumn(name = "notification_id")
@@ -18,16 +21,19 @@ public class NotificationRecurrenceEntity {
 
     protected NotificationRecurrenceEntity(){}
 
-    public NotificationRecurrenceEntity(Integer recurrence) {
+    public NotificationRecurrenceEntity(NotificationEntity notification, LocalDate recurrence) {
+        this.notification = notification;
         this.recurrence = recurrence;
     }
 
-    public void setNotification(NotificationEntity notification) {
-        this.notification = notification;
+    public NotificationRecurrenceEntity(LocalDate recurrence) {
+        this.recurrence = recurrence;
     }
 
-    public Integer getRecurrence() {
+    public LocalDate getRecurrence() {
         return recurrence;
     }
 
+    public void setNotification(NotificationEntity notificationEntity) {
+    }
 }

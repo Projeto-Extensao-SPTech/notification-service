@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/notification")
+@RequestMapping("/notifications")
 @RestController
 public class NotificationController {
 
@@ -43,7 +43,7 @@ public class NotificationController {
     private ResponseEntity<CreateNotificationResponse> createNotification(@RequestBody CreateNotificationRequest notificationRequest) {
 
         Notification notificationCreateObj = notificationMapperDTO.toDomain(notificationRequest);
-        Notification notification = createNotificationUseCase.execute(notificationCreateObj);
+        Notification notification = createNotificationUseCase.execute(notificationCreateObj, notificationRequest.recurrence());
         var response = notificationMapperDTO.toResponse(notification);
 
         return ResponseEntity

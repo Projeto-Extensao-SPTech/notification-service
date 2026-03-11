@@ -12,6 +12,6 @@ public record CreateNotificationResponse(
         Long fairId,
         String message,
         LocalDate eventDate,
-        List<Integer> recurrence,
+        List<LocalDate> recurrence,
         ZonedDateTime createdAt
 ){}
