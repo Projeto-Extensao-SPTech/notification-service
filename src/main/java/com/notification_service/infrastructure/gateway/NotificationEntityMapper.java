@@ -18,9 +18,16 @@ public class NotificationEntityMapper {
         );
 
         notification.notificationRecurrences()
-                .forEach(notificationRecurrence -> notificationEntity.addRecurrence(
-                        new NotificationRecurrenceEntity(notificationRecurrence.recurrence())
-                ));
+                .forEach(notificationRecurrence -> {
+
+                    NotificationRecurrenceEntity recurrenceEntity =
+                            new NotificationRecurrenceEntity(
+                                    notificationEntity,
+                                    notificationRecurrence.recurrence()
+                            );
+
+                    notificationEntity.addRecurrence(recurrenceEntity);
+                });
 
         return notificationEntity;
     }
@@ -43,8 +50,8 @@ public class NotificationEntityMapper {
         );
     }
 
-    public static NotificationRecurrenceEntity toEntity(NotificationRecurrence notificationRecurrence) {
-        return new NotificationRecurrenceEntity(notificationRecurrence.recurrence());
+    public static NotificationRecurrenceEntity toEntity(NotificationEntity notification, NotificationRecurrence notificationRecurrence) {
+        return new NotificationRecurrenceEntity(notification,notificationRecurrence.recurrence());
     }
 
     public NotificationRecurrence toDomain(NotificationRecurrenceEntity entity) {

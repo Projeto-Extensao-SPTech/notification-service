@@ -6,8 +6,10 @@ import com.notification_service.application.usecases.notification.CreateNotifica
 import com.notification_service.application.usecases.notification.DeleteNotification;
 import com.notification_service.application.usecases.notification.GetNotification;
 import com.notification_service.application.usecases.notification.GetNotificationById;
+import com.notification_service.domain.service.RecurrenceCalculator;
 import com.notification_service.infrastructure.gateway.NotificationEntityMapper;
 import com.notification_service.infrastructure.gateway.NotificationRepositoryGateway;
+import com.notification_service.infrastructure.persistence.NotificationRecurrenceRepository;
 import com.notification_service.infrastructure.persistence.NotificationRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,8 @@ import org.springframework.context.annotation.Configuration;
 public class NotificationConfig {
 
     @Bean
-    CreateNotification createNotificationCase(NotificationGateway notificationGateway) {
-        return new CreateNotification(notificationGateway);
+    CreateNotification createNotificationCase(NotificationGateway notificationGateway, RecurrenceCalculator recurrenceCalculator) {
+        return new CreateNotification(notificationGateway,recurrenceCalculator);
     }
 
     @Bean
@@ -36,8 +38,8 @@ public class NotificationConfig {
     }
 
     @Bean
-    NotificationGateway notificationGateway(NotificationRepository notificationRepository, NotificationEntityMapper notificationEntityMapper) {
-        return new NotificationRepositoryGateway(notificationRepository, notificationEntityMapper);
+    NotificationGateway notificationGateway(NotificationRepository notificationRepository, NotificationEntityMapper notificationEntityMapper, NotificationRecurrenceRepository notificationRecurrenceRepository) {
+        return new NotificationRepositoryGateway(notificationRepository, notificationEntityMapper, notificationRecurrenceRepository);
     }
 
     @Bean
@@ -49,4 +51,7 @@ public class NotificationConfig {
     NotificationMapperDTO notificationMapperDTO(){
         return new NotificationMapperDTO();
     }
+
+    @Bean
+    RecurrenceCalculator recurrenceCalculator(){return new RecurrenceCalculator();}
 }
