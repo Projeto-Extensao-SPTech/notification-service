@@ -7,7 +7,7 @@ import com.notification_service.infrastructure.persistence.NotificationRecurrenc
 
 public class NotificationEntityMapper {
 
-    public NotificationEntity toEntity(Notification notification) {
+    public NotificationEntity toEntityNotification(Notification notification) {
 
         NotificationEntity notificationEntity = new NotificationEntity(
                 notification.notificationType(),
@@ -32,11 +32,11 @@ public class NotificationEntityMapper {
         return notificationEntity;
     }
 
-    public Notification toDomain(NotificationEntity notificationEntity) {
+    public Notification toDomainNotication(NotificationEntity notificationEntity) {
 
         var recurrences = notificationEntity.getNotificationRecurrence()
                 .stream()
-                .map(this::toDomain)
+                .map(this::toDomainRecurrence)
                 .toList();
 
         return new Notification(
@@ -50,11 +50,11 @@ public class NotificationEntityMapper {
         );
     }
 
-    public static NotificationRecurrenceEntity toEntity(NotificationEntity notification, NotificationRecurrence notificationRecurrence) {
+    public static NotificationRecurrenceEntity toEntityRecurrence(NotificationEntity notification, NotificationRecurrence notificationRecurrence) {
         return new NotificationRecurrenceEntity(notification,notificationRecurrence.recurrence());
     }
 
-    public NotificationRecurrence toDomain(NotificationRecurrenceEntity entity) {
+    public NotificationRecurrence toDomainRecurrence(NotificationRecurrenceEntity entity) {
         return new NotificationRecurrence(entity.getRecurrence());
     }
 }

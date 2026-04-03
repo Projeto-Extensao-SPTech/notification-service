@@ -34,6 +34,10 @@ public class NotificationRecurrenceEntity {
         return recurrence;
     }
 
+    public NotificationEntity getNotification(){
+        return notification;
+    }
+
     public void setNotification(NotificationEntity notificationEntity) {
     }
 }

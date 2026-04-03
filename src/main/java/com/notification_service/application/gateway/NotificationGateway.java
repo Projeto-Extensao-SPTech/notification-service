@@ -13,6 +13,8 @@ public interface NotificationGateway {
 
     Notification findById(Long id);
 
+    List<Notification> findNotificationRecurrences(LocalDate date);
+
     List<Notification> findAll();
 
     void delete(Long id);
