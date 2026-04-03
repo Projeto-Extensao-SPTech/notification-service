@@ -2,10 +2,7 @@ package com.notification_service.config.notification;
 
 import com.notification_service.application.dto.NotificationMapperDTO;
 import com.notification_service.application.gateway.NotificationGateway;
-import com.notification_service.application.usecases.notification.CreateNotification;
-import com.notification_service.application.usecases.notification.DeleteNotification;
-import com.notification_service.application.usecases.notification.GetNotification;
-import com.notification_service.application.usecases.notification.GetNotificationById;
+import com.notification_service.application.usecases.notification.*;
 import com.notification_service.domain.service.RecurrenceCalculator;
 import com.notification_service.infrastructure.gateway.NotificationEntityMapper;
 import com.notification_service.infrastructure.gateway.NotificationRepositoryGateway;
@@ -30,6 +27,11 @@ public class NotificationConfig {
     @Bean
     GetNotification getNotification(NotificationGateway notificationGateway){
         return new GetNotification(notificationGateway);
+    }
+
+    @Bean
+    GetNotificationByRecurrence getNotificationByRecurrence(NotificationGateway notificationGateway){
+        return new GetNotificationByRecurrence(notificationGateway);
     }
 
     @Bean

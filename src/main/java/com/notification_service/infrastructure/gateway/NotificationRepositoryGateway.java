@@ -25,9 +25,9 @@ public class NotificationRepositoryGateway implements NotificationGateway {
 
     @Override
     public Notification createNotification(Notification notification) {
-        NotificationEntity notificationEntity = notificationEntityMapper.toEntity(notification);
+        NotificationEntity notificationEntity = notificationEntityMapper.toEntityNotification(notification);
         NotificationEntity savedNotification = notificationRepository.save(notificationEntity);
-        return notificationEntityMapper.toDomain(savedNotification);
+        return notificationEntityMapper.toDomainNotication(savedNotification);
     }
 
     @Override
@@ -47,15 +47,25 @@ public class NotificationRepositoryGateway implements NotificationGateway {
     @Override
     public Notification findById(Long id) {
         return notificationRepository.findById(id)
-                .map(notificationEntityMapper::toDomain)
+                .map(notificationEntityMapper::toDomainNotication)
                 .orElse(null);
+    }
+
+    @Override
+    public List<Notification> findNotificationRecurrences(LocalDate date) {
+        List<NotificationRecurrenceEntity> response = notificationRecurrenceRepository.findByRecurrence(date);
+
+        return response.stream()
+                .map(NotificationRecurrenceEntity::getNotification)
+                .map(notificationEntityMapper::toDomainNotication)
+                .toList();
     }
 
     @Override
     public List<Notification> findAll() {
         return notificationRepository.findAll()
                 .stream()
-                .map(notificationEntityMapper::toDomain)
+                .map(notificationEntityMapper::toDomainNotication)
                 .toList();
     }
 
