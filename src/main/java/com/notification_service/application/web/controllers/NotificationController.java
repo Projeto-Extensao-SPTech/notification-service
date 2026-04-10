@@ -1,4 +1,4 @@
-package com.notification_service.infrastructure.controller;
+package com.notification_service.application.web.controllers;
 
 import com.notification_service.application.dto.NotificationMapperDTO;
 import com.notification_service.application.dto.request.CreateNotificationRequest;
@@ -6,6 +6,8 @@ import com.notification_service.application.dto.response.CreateNotificationRespo
 import com.notification_service.application.dto.response.NotificationResponse;
 import com.notification_service.application.usecases.notification.*;
 import com.notification_service.domain.entity.Notification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +63,8 @@ public class NotificationController {
     }
 
     @GetMapping
-    private List<NotificationResponse> getAllNotification() {
-        return getNotification.execute();
+    private Page<NotificationResponse> getAllNotification(Pageable pageable) {
+        return getNotification.execute(pageable);
     }
 
     @GetMapping("/recurrence")

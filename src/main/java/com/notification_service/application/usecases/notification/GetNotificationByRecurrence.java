@@ -5,6 +5,7 @@ import com.notification_service.application.exception.notification.NotificationN
 import com.notification_service.application.gateway.NotificationGateway;
 import com.notification_service.domain.entity.Notification;
 import com.notification_service.domain.entity.NotificationRecurrence;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
