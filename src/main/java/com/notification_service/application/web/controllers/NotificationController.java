@@ -4,9 +4,11 @@ import com.notification_service.application.dto.NotificationMapperDTO;
 import com.notification_service.application.dto.request.CreateNotificationRequest;
 import com.notification_service.application.dto.response.CreateNotificationResponse;
 import com.notification_service.application.dto.response.NotificationResponse;
+import com.notification_service.application.dto.response.PageResponse;
 import com.notification_service.application.usecases.notification.*;
 import com.notification_service.domain.entity.Notification;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,16 +65,24 @@ public class NotificationController {
     }
 
     @GetMapping
-    private Page<NotificationResponse> getAllNotification(Pageable pageable) {
-        return getNotification.execute(pageable);
+    private PageResponse<NotificationResponse> getAllNotification(
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ) {
+        Pageable requestPageable = PageRequest.of(page, size);
+        Page<NotificationResponse> responsePage = getNotification.execute(requestPageable);
+        return new PageResponse<>(responsePage);
     }
 
     @GetMapping("/recurrence")
     public ResponseEntity<List<NotificationResponse>> findByRecurrenceDate(
-            @RequestParam LocalDate date
+            @RequestParam LocalDate date,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
     ) {
+        Pageable requestPageable = PageRequest.of(page, size);
         List<NotificationResponse> response =
-                getNotificationByRecurrence.execute(date);
+                getNotificationByRecurrence.execute(date, requestPageable);
 
         return ResponseEntity
                 .ok()

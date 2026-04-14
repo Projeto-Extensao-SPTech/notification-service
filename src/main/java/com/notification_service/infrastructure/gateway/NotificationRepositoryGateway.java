@@ -6,6 +6,8 @@ import com.notification_service.infrastructure.persistence.NotificationEntity;
 import com.notification_service.infrastructure.persistence.NotificationRecurrenceEntity;
 import com.notification_service.infrastructure.persistence.NotificationRecurrenceRepository;
 import com.notification_service.infrastructure.persistence.NotificationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -62,11 +64,8 @@ public class NotificationRepositoryGateway implements NotificationGateway {
     }
 
     @Override
-    public List<Notification> findAll() {
-        return notificationRepository.findAll()
-                .stream()
-                .map(notificationEntityMapper::toDomainNotication)
-                .toList();
+    public Page<Notification> findAll(Pageable pageable) {
+        return notificationRepository.findAll(pageable).map(notificationEntityMapper::toDomainNotication);
     }
 
     @Override
