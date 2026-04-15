@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RequestMapping("/notifications")
 @RestController
@@ -75,18 +74,16 @@ public class NotificationController {
     }
 
     @GetMapping("/recurrence")
-    public ResponseEntity<List<NotificationResponse>> findByRecurrenceDate(
+    public PageResponse<NotificationResponse> findByRecurrenceDate(
             @RequestParam LocalDate date,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size
     ) {
         Pageable requestPageable = PageRequest.of(page, size);
-        List<NotificationResponse> response =
+        Page<NotificationResponse> response =
                 getNotificationByRecurrence.execute(date, requestPageable);
 
-        return ResponseEntity
-                .ok()
-                .body(response);
+        return new PageResponse<>(response);
     }
 
     @DeleteMapping("/{id}")
