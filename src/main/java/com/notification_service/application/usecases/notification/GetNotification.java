@@ -4,6 +4,8 @@ import com.notification_service.application.dto.response.NotificationResponse;
 import com.notification_service.application.exception.notification.NotificationNotFoundException;
 import com.notification_service.application.gateway.NotificationGateway;
 import com.notification_service.domain.entity.NotificationRecurrence;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,16 +17,14 @@ public class GetNotification {
         this.notificationGateway = notificationGateway;
     }
 
-    public List<NotificationResponse> execute() {
-        var response = notificationGateway.findAll();
+    public Page<NotificationResponse> execute(Pageable pageable) {
+        var response = notificationGateway.findAll(pageable);
 
         if (response.isEmpty()) {
             throw new NotificationNotFoundException("Não foi encontrada nenhuma notificação.");
         }
 
-        return response.stream()
-                .map(this::toResponse)
-                .toList();
+        return response.map(this::toResponse);
     }
 
     private NotificationResponse toResponse(com.notification_service.domain.entity.Notification notification) {
