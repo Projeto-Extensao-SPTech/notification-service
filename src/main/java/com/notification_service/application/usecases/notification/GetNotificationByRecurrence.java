@@ -31,18 +31,18 @@ public class GetNotificationByRecurrence {
     }
 
     private NotificationResponse toResponse(com.notification_service.domain.entity.Notification notification) {
-        List<LocalDate> recurrences = notification.notificationRecurrences().stream()
+        List<LocalDate> recurrences = notification.getNotificationRecurrences().stream()
                 .map(NotificationRecurrence::recurrence)
                 .toList();
 
         return new NotificationResponse(
-                notification.id(),
-                notification.notificationType(),
-                notification.fairId(),
-                notification.message(),
-                notification.eventDate(),
+                notification.getId(),
+                notification.getNotificationType(),
+                notification.getFairId(),
+                notification.getMessage(),
+                notification.getEventDate(),
                 recurrences,
-                notification.createdAt()
+                notification.getCreatedAt()
         );
     }
 }

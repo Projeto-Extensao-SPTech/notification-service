@@ -24,10 +24,12 @@ public class CreateNotification {
         Notification savedNotification =
                 notificationGateway.createNotification(notification);
 
-        Set<LocalDate> recurrenceDates =
-                recurrenceCalculator.buildRecurrenceDates(notification.eventDate(), recurrences);
+        if (recurrences != null) {
+            Set<LocalDate> recurrenceDates =
+                    recurrenceCalculator.buildRecurrenceDates(notification.getEventDate(), recurrences);
 
-        notificationGateway.createRecurrences(savedNotification, recurrenceDates);
+            notificationGateway.createRecurrences(savedNotification, recurrenceDates);
+        }
 
         return savedNotification;
     }

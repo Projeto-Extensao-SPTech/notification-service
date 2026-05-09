@@ -35,7 +35,7 @@ public class NotificationRepositoryGateway implements NotificationGateway {
     public void createRecurrences(Notification notification, Set<LocalDate> recurrences) {
 
         NotificationEntity notificationEntity = notificationRepository
-                .findById(notification.id())
+                .findById(notification.getId())
                 .orElseThrow();
 
         recurrences.forEach(date -> {

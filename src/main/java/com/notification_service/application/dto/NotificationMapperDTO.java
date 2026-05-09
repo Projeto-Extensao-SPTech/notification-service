@@ -12,23 +12,23 @@ import java.util.List;
 public class NotificationMapperDTO {
     public CreateNotificationResponse toResponse(Notification notification) {
 
-        List<LocalDate> recurrences = notification.notificationRecurrences()
+        List<LocalDate> recurrences = notification.getNotificationRecurrences()
                 .stream()
                 .map(NotificationRecurrence::recurrence)
                 .toList();
 
         return new CreateNotificationResponse(
-                notification.id(),
-                notification.notificationType(),
-                notification.fairId(),
-                notification.message(),
-                notification.eventDate(),
+                notification.getId(),
+                notification.getNotificationType(),
+                notification.getFairId(),
+                notification.getMessage(),
+                notification.getEventDate(),
                 recurrences,
                 ZonedDateTime.now()
         );
     }
 
-    public Notification toDomain(CreateNotificationRequest request ){
+    public Notification toDomain(CreateNotificationRequest request){
 
         return new Notification(
                 null,
@@ -36,6 +36,7 @@ public class NotificationMapperDTO {
                 request.fairId(),
                 List.of(),
                 request.message(),
+                null,
                 request.eventDate(),
                 ZonedDateTime.now()
         );

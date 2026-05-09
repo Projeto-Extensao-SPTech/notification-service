@@ -25,19 +25,19 @@ public class GetNotificationById {
             throw new NotificationNotFoundException("A notificação com o id: %d não foi encontrada.".formatted(id));
         }
 
-        List<LocalDate> recurrences = response.notificationRecurrences()
+        List<LocalDate> recurrences = response.getNotificationRecurrences()
                 .stream()
                 .map(NotificationRecurrence::recurrence)
                 .toList();
 
         return new NotificationResponse(
-                response.id(),
-                response.notificationType(),
-                response.fairId(),
-                response.message(),
-                response.eventDate(),
+                response.getId(),
+                response.getNotificationType(),
+                response.getFairId(),
+                response.getMessage(),
+                response.getEventDate(),
                 recurrences,
-                response.createdAt()
+                response.getCreatedAt()
         );
     }
 }

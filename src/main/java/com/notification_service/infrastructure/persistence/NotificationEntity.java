@@ -26,6 +26,8 @@ public class NotificationEntity {
 
     private String message;
 
+    private String recipientMailAddress = null;
+
     @Column(name = "event_date", nullable = false)
     private LocalDate eventDate;
 
@@ -37,12 +39,14 @@ public class NotificationEntity {
             NotificationType notificationType,
             Long fairId,
             String message,
+            String recipientMailAddress,
             LocalDate eventDate,
             ZonedDateTime createdAt
     ) {
         this.notificationType = notificationType;
         this.fairId = fairId;
         this.message = message;
+        this.recipientMailAddress = recipientMailAddress;
         this.eventDate = eventDate;
         this.createdAt = createdAt;
     }
@@ -82,5 +86,9 @@ public class NotificationEntity {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public String getRecipientMailAddress() {
+        return recipientMailAddress;
     }
 }

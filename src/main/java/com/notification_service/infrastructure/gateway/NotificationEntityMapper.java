@@ -10,14 +10,15 @@ public class NotificationEntityMapper {
     public NotificationEntity toEntityNotification(Notification notification) {
 
         NotificationEntity notificationEntity = new NotificationEntity(
-                notification.notificationType(),
-                notification.fairId(),
-                notification.message(),
-                notification.eventDate(),
-                notification.createdAt()
+                notification.getNotificationType(),
+                notification.getFairId(),
+                notification.getMessage(),
+                notification.getRecipientMailAddress(),
+                notification.getEventDate(),
+                notification.getCreatedAt()
         );
 
-        notification.notificationRecurrences()
+        notification.getNotificationRecurrences()
                 .forEach(notificationRecurrence -> {
 
                     NotificationRecurrenceEntity recurrenceEntity =
@@ -45,6 +46,7 @@ public class NotificationEntityMapper {
                 notificationEntity.getFairId(),
                 recurrences,
                 notificationEntity.getMessage(),
+                notificationEntity.getRecipientMailAddress(),
                 notificationEntity.getEventDate(),
                 notificationEntity.getCreatedAt()
         );

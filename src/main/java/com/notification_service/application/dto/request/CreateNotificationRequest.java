@@ -11,5 +11,4 @@ public record CreateNotificationRequest (
         String message,
         LocalDate eventDate,
         List<Integer> recurrence
-){
-}
+){}

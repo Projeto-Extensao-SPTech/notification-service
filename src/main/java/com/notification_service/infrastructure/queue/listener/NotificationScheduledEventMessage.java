@@ -1,9 +1,9 @@
-package com.notification_service.infrastructure.queue;
+package com.notification_service.infrastructure.queue.listener;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record NotificationCreatedEventMessage(
+public record NotificationScheduledEventMessage(
         String notificationType,
         Long fairId,
         String message,
