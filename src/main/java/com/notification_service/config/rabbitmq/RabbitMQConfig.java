@@ -16,12 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String MQ_MESSAGE_CONVERTER = "mq-message-converter";
-
     public static final String NOTIFICATION_EXCHANGE = "notification.exchange";
-
     public static final String NOTIFICATION_SCHEDULED_QUEUE = "notification.scheduled.queue";
     public static final String NOTIFICATION_SCHEDULED_ROUTING_KEY = "notification.scheduled";
-
     public static final String NOTIFICATION_INSTANT_QUEUE = "notification.instant.queue";
     public static final String NOTIFICATION_INSTANT_ROUTING_KEY = "notification.instant";
 
