@@ -20,7 +20,7 @@ public class NotificationInstantListener {
         Notification notification = Notification.instant(
                 NotificationType.valueOf(event.notificationType()),
                 event.message(),
-                event.recipientEmail()
+                event.recipientMailAddress()
         );
 
         sendInstantNotification.execute(notification);

@@ -47,7 +47,7 @@ public class NotificationMapperDTO {
         return Notification.instant(
                 request.notificationType(),
                 request.message(),
-                request.recipientEmail()
+                request.recipientMailAddress()
         );
     }
 }
