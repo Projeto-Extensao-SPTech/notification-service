@@ -1,17 +1,17 @@
 package com.notification.service.infrastructure.queue.listener;
 
-import com.notification.service.domain.usecases.notification.CreateNotification;
-import com.notification.service.infrastructure.config.rabbitmq.RabbitMQConfig;
 import com.notification.service.domain.entity.Notification;
 import com.notification.service.domain.entity.NotificationType;
+import com.notification.service.domain.usecases.notification.SendInstantNotification;
+import com.notification.service.infrastructure.config.rabbitmq.RabbitMQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 public class NotificationInstantListener {
 
-    private final CreateNotification createNotification;
+    private final SendInstantNotification sendInstantNotification;
 
-    public NotificationInstantListener(CreateNotification createNotification) {
-        this.createNotification = createNotification;
+    public NotificationInstantListener(SendInstantNotification sendInstantNotification) {
+        this.sendInstantNotification = sendInstantNotification;
     }
 
     @RabbitListener(queues = RabbitMQConfig.NOTIFICATION_INSTANT_QUEUE)
@@ -23,6 +23,6 @@ public class NotificationInstantListener {
                 event.recipientEmail()
         );
 
-        createNotification.execute(notification, null);
+        sendInstantNotification.execute(notification);
     }
 }

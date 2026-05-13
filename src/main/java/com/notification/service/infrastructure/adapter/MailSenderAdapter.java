@@ -19,15 +19,16 @@ public class MailSenderAdapter implements MailSenderGateway {
     }
 
     @Override
-    public void sendSimpleMail(Notification notification, String to) {
+    public void sendSimpleMail(Notification notification) {
+        String recipientMailAddress = notification.getRecipientMailAddress();
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(to);
+            message.setTo(recipientMailAddress);
             message.setSubject(notification.getNotificationType().getDescription());
             message.setText(notification.getMessage());
             mailSender.send(message);
         } catch (Exception e) {
-            throw new MailSenderException("Error sending mail to " + to + ": " + e.getMessage());
+            throw new MailSenderException("Error sending mail to " + recipientMailAddress + ": " + e.getMessage());
         }
     }
 

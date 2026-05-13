@@ -1,6 +1,7 @@
 package com.notification.service.application.dto;
 
 import com.notification.service.application.dto.request.CreateNotificationRequest;
+import com.notification.service.application.dto.request.SendInstantNotificationRequest;
 import com.notification.service.application.dto.response.CreateNotificationResponse;
 import com.notification.service.domain.entity.Notification;
 import com.notification.service.domain.entity.NotificationRecurrence;
@@ -39,6 +40,14 @@ public class NotificationMapperDTO {
                 null,
                 request.eventDate(),
                 ZonedDateTime.now()
+        );
+    }
+
+    public Notification toDomain(SendInstantNotificationRequest request) {
+        return Notification.instant(
+                request.notificationType(),
+                request.message(),
+                request.recipientEmail()
         );
     }
 }

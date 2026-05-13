@@ -1,6 +1,7 @@
 package com.notification.service.infrastructure.config.notification;
 
 import com.notification.service.application.dto.NotificationMapperDTO;
+import com.notification.service.domain.gateway.MailSenderGateway;
 import com.notification.service.domain.gateway.NotificationRepositoryGateway;
 import com.notification.service.domain.service.RecurrenceCalculator;
 import com.notification.service.domain.usecases.notification.CreateNotification;
@@ -8,6 +9,7 @@ import com.notification.service.domain.usecases.notification.DeleteNotification;
 import com.notification.service.domain.usecases.notification.GetNotification;
 import com.notification.service.domain.usecases.notification.GetNotificationById;
 import com.notification.service.domain.usecases.notification.GetNotificationByRecurrence;
+import com.notification.service.domain.usecases.notification.SendInstantNotification;
 import com.notification.service.infrastructure.mapper.NotificationEntityMapper;
 import com.notification.service.infrastructure.adapter.NotificationRepositoryAdapter;
 import com.notification.service.infrastructure.persistence.NotificationRecurrenceRepository;
@@ -52,6 +54,14 @@ public class NotificationConfig {
             NotificationRepositoryGateway notificationRepositoryGateway
     ) {
         return new DeleteNotification(notificationRepositoryGateway);
+    }
+
+    @Bean
+    SendInstantNotification sendInstantNotification(
+            NotificationRepositoryGateway notificationRepositoryGateway,
+            MailSenderGateway mailSenderGateway
+    ) {
+        return new SendInstantNotification(notificationRepositoryGateway, mailSenderGateway);
     }
 
     @Bean

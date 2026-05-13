@@ -12,7 +12,6 @@ public class RecurrenceCalculator {
         dates.add(eventDate);
 
         recurrences.forEach(r -> dates.add(getDateFromRecurrence(eventDate, r)));
-
         return dates;
     }
 

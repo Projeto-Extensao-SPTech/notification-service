@@ -2,6 +2,7 @@ package com.notification.service.application.web.controllers;
 
 import com.notification.service.application.dto.NotificationMapperDTO;
 import com.notification.service.application.dto.request.CreateNotificationRequest;
+import com.notification.service.application.dto.request.SendInstantNotificationRequest;
 import com.notification.service.application.dto.response.CreateNotificationResponse;
 import com.notification.service.application.dto.response.NotificationResponse;
 import com.notification.service.application.dto.response.PageResponse;
@@ -11,6 +12,7 @@ import com.notification.service.domain.usecases.notification.DeleteNotification;
 import com.notification.service.domain.usecases.notification.GetNotification;
 import com.notification.service.domain.usecases.notification.GetNotificationById;
 import com.notification.service.domain.usecases.notification.GetNotificationByRecurrence;
+import com.notification.service.domain.usecases.notification.SendInstantNotification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +43,8 @@ public class NotificationController {
 
     private final DeleteNotification deleteNotification;
 
+    private final SendInstantNotification sendInstantNotification;
+
     private final NotificationMapperDTO notificationMapperDTO;
 
     public NotificationController(
@@ -49,7 +53,8 @@ public class NotificationController {
             GetNotificationById getNotificationById,
             GetNotificationByRecurrence getNotificationByRecurrence,
             DeleteNotification deleteNotification,
-            GetNotification getNotification
+            GetNotification getNotification,
+            SendInstantNotification sendInstantNotification
     ) {
         this.createNotificationUseCase = createNotificationUseCase;
         this.notificationMapperDTO = notificationMapperDTO;
@@ -57,13 +62,13 @@ public class NotificationController {
         this.getNotificationByRecurrence = getNotificationByRecurrence;
         this.deleteNotification = deleteNotification;
         this.getNotification = getNotification;
+        this.sendInstantNotification = sendInstantNotification;
     }
 
     @PostMapping
     private ResponseEntity<CreateNotificationResponse> createNotification(
             @RequestBody CreateNotificationRequest notificationRequest
     ) {
-
         Notification notificationCreateObj = notificationMapperDTO.toDomain(notificationRequest);
         Notification notification = createNotificationUseCase.execute(
                 notificationCreateObj,
@@ -73,6 +78,19 @@ public class NotificationController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .body(response);
+    }
+
+    @PostMapping
+    private ResponseEntity<CreateNotificationResponse> sendInstantNotification(
+            @RequestBody SendInstantNotificationRequest notificationRequest
+    ) {
+        Notification notificationSent = sendInstantNotification.execute(
+                notificationMapperDTO.toDomain(notificationRequest)
+        );
+        CreateNotificationResponse response = notificationMapperDTO.toResponse(notificationSent);
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .body(response);
     }
 
