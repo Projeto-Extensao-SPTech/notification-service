@@ -65,7 +65,7 @@ public class NotificationController {
         this.sendInstantNotification = sendInstantNotification;
     }
 
-    @PostMapping
+    @PostMapping("/schedule")
     private ResponseEntity<CreateNotificationResponse> createNotification(
             @RequestBody CreateNotificationRequest notificationRequest
     ) {
@@ -81,7 +81,7 @@ public class NotificationController {
                 .body(response);
     }
 
-    @PostMapping
+    @PostMapping("/send")
     private ResponseEntity<CreateNotificationResponse> sendInstantNotification(
             @RequestBody SendInstantNotificationRequest notificationRequest
     ) {

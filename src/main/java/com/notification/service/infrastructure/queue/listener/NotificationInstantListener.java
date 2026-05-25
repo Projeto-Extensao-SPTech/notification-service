@@ -5,7 +5,9 @@ import com.notification.service.domain.entity.NotificationType;
 import com.notification.service.domain.usecases.notification.SendInstantNotification;
 import com.notification.service.infrastructure.config.rabbitmq.RabbitMQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NotificationInstantListener {
 
     private final SendInstantNotification sendInstantNotification;
@@ -19,10 +21,17 @@ public class NotificationInstantListener {
 
         Notification notification = Notification.instant(
                 NotificationType.valueOf(event.notificationType()),
-                event.message(),
+                extractMessageFromEvent(event.message()),
                 event.recipientMailAddress()
         );
 
         sendInstantNotification.execute(notification);
+    }
+
+    private String extractMessageFromEvent(String message) {
+        if (message.contains("<html>")) {
+            return null;
+        }
+        return message;
     }
 }

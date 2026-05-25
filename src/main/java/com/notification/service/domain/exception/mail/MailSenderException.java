@@ -7,7 +7,7 @@ public class MailSenderException extends RuntimeException {
 
     public MailSenderException(String message) {
         super(message);
-        this.status = HttpStatus.UNPROCESSABLE_CONTENT;
+        this.status = HttpStatus.UNPROCESSABLE_ENTITY;
     }
 
     public HttpStatus getStatus() {
