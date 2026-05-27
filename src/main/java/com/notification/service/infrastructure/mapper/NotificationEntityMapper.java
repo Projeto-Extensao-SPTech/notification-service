@@ -15,7 +15,8 @@ public class NotificationEntityMapper {
                 notification.getMessage(),
                 notification.getRecipientMailAddress(),
                 notification.getEventDate(),
-                notification.getCreatedAt()
+                notification.getCreatedAt(),
+                notification.getEventId()
         );
 
         notification.getNotificationRecurrences()

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record NotificationScheduledEventMessage(
+        String eventId,
         String notificationType,
         Long fairId,
         String message,

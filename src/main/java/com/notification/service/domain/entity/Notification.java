@@ -14,6 +14,8 @@ public class Notification {
 
     private List<NotificationRecurrence> notificationRecurrences;
 
+    private String eventId;
+
     private String message;
 
     private String recipientMailAddress;
@@ -25,6 +27,7 @@ public class Notification {
     private Notification() {}
 
     public static Notification scheduled(
+            String eventId,
             NotificationType notificationType,
             Long fairId,
             String message,
@@ -32,6 +35,7 @@ public class Notification {
             List<NotificationRecurrence> recurrences
     ) {
         Notification notification = new Notification();
+        notification.eventId = eventId;
         notification.notificationType = notificationType;
         notification.fairId = fairId;
         notification.message = message;
@@ -43,10 +47,12 @@ public class Notification {
     }
 
     public static Notification instant(
+            String eventId,
             NotificationType notificationType,
             String message,
             String recipientMailAddress) {
         Notification notification = new Notification();
+        notification.eventId = eventId;
         notification.notificationType = notificationType;
         notification.fairId = null;
         notification.message = message;
@@ -74,6 +80,38 @@ public class Notification {
         this.recipientMailAddress = recipientMailAddress;
         this.eventDate = eventDate;
         this.createdAt = createdAt;
+    }
+
+    public Notification withoutMessage() {
+        Notification notification = new Notification();
+        notification.id = this.id;
+        notification.eventId = this.eventId;
+        notification.notificationType = this.notificationType;
+        notification.fairId = this.fairId;
+        notification.notificationRecurrences = this.notificationRecurrences;
+        notification.recipientMailAddress = this.recipientMailAddress;
+        notification.eventDate = this.eventDate;
+        notification.createdAt = this.createdAt;
+        notification.message = null;
+        return notification;
+    }
+
+    public boolean isHtmlMessage() {
+        return message != null &&
+                (message.contains("<html") || message.contains("<!DOCTYPE"));
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", notificationType=" + notificationType +
+                ", fairId=" + fairId +
+                ", eventId='" + eventId + '\'' +
+                ", eventDate=" + eventDate +
+                ", createdAt=" + createdAt +
+                ", recurrences=" + (notificationRecurrences != null ? notificationRecurrences.size() : 0) +
+                '}';
     }
 
     public Long getId() {
@@ -106,5 +144,9 @@ public class Notification {
 
     public ZonedDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public String getEventId() {
+        return eventId;
     }
 }

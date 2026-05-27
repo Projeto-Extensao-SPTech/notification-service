@@ -23,6 +23,7 @@ public class NotificationScheduledListener {
         List<Integer> recurrences = event.recurrence();
 
         Notification notification = Notification.scheduled(
+                event.eventId(),
                 NotificationType.valueOf(event.notificationType()),
                 event.fairId(),
                 event.message(),

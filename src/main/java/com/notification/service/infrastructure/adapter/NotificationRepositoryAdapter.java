@@ -78,4 +78,16 @@ public class NotificationRepositoryAdapter implements NotificationRepositoryGate
     public void delete(Long id) {
         notificationRepository.deleteById(id);
     }
+
+    @Override
+    public boolean existsByEventId(String eventId) {
+        return notificationRepository.existsByEventId(eventId);
+    }
+
+    @Override
+    public Notification findByEventId(String eventId) {
+        return notificationRepository.findByEventId(eventId)
+                .map(notificationEntityMapper::toDomainNotication)
+                .orElse(null);
+    }
 }

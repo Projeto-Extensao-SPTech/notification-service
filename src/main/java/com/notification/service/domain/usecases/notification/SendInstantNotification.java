@@ -19,8 +19,17 @@ public class SendInstantNotification {
     }
 
     public Notification execute(Notification notification) {
-        Notification savedNotification = notificationRepositoryGateway.createNotification(notification);
-        mailSenderGateway.sendSimpleMail(savedNotification);
+        if (notificationRepositoryGateway.existsByEventId(notification.getEventId())) {
+            return notificationRepositoryGateway.findByEventId(notification.getEventId());
+        }
+
+        Notification toSave = notification.getMessage() != null &&
+                (notification.getMessage().contains("<html") || notification.getMessage().contains("<!DOCTYPE"))
+                ? notification.withoutMessage()
+                : notification;
+
+        Notification savedNotification = notificationRepositoryGateway.createNotification(toSave);
+        mailSenderGateway.sendSimpleMail(notification);
         return savedNotification;
     }
 }

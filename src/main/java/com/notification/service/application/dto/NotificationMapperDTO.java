@@ -45,6 +45,7 @@ public class NotificationMapperDTO {
 
     public Notification toDomain(SendInstantNotificationRequest request) {
         return Notification.instant(
+                request.eventId(),
                 request.notificationType(),
                 request.message(),
                 request.recipientMailAddress()

@@ -20,18 +20,12 @@ public class NotificationInstantListener {
     public void listerNotificationInstantEvent(NotificationInstantEventMessage event) {
 
         Notification notification = Notification.instant(
+                event.eventId(),
                 NotificationType.valueOf(event.notificationType()),
-                extractMessageFromEvent(event.message()),
+                event.message(),
                 event.recipientMailAddress()
         );
 
         sendInstantNotification.execute(notification);
-    }
-
-    private String extractMessageFromEvent(String message) {
-        if (message.contains("<html>")) {
-            return null;
-        }
-        return message;
     }
 }

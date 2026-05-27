@@ -20,4 +20,7 @@ public interface NotificationRepositoryGateway {
 
     void delete(Long id);
 
+    boolean existsByEventId(String eventId);
+
+    Notification findByEventId(String eventId);
 }

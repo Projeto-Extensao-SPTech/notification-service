@@ -21,6 +21,9 @@ public class CreateNotification {
     }
 
     public Notification execute(Notification notification, List<Integer> recurrences) {
+        if (notificationRepositoryGateway.existsByEventId(notification.getEventId())) {
+            return notificationRepositoryGateway.findByEventId(notification.getEventId());
+        }
 
         Notification savedNotification =
                 notificationRepositoryGateway.createNotification(notification);

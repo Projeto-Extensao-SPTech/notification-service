@@ -33,6 +33,9 @@ public class NotificationEntity {
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotificationRecurrenceEntity> notificationRecurrence = new ArrayList<>();
 
+    @Column(unique = true)
+    private String eventId;
+
     private String message;
 
     private String recipientMailAddress = null;
@@ -50,7 +53,8 @@ public class NotificationEntity {
             String message,
             String recipientMailAddress,
             LocalDate eventDate,
-            ZonedDateTime createdAt
+            ZonedDateTime createdAt,
+            String eventId
     ) {
         this.notificationType = notificationType;
         this.fairId = fairId;
@@ -58,6 +62,7 @@ public class NotificationEntity {
         this.recipientMailAddress = recipientMailAddress;
         this.eventDate = eventDate;
         this.createdAt = createdAt;
+        this.eventId = eventId;
     }
 
     public void addRecurrence(NotificationRecurrenceEntity recurrence) {
@@ -99,5 +104,9 @@ public class NotificationEntity {
 
     public String getRecipientMailAddress() {
         return recipientMailAddress;
+    }
+
+    public String getEventId() {
+        return eventId;
     }
 }
