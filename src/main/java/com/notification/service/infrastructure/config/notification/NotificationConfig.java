@@ -10,10 +10,14 @@ import com.notification.service.domain.usecases.notification.GetNotification;
 import com.notification.service.domain.usecases.notification.GetNotificationById;
 import com.notification.service.domain.usecases.notification.GetNotificationByRecurrence;
 import com.notification.service.domain.usecases.notification.SendInstantNotification;
+import com.notification.service.domain.usecases.notification.SendScheduleNotifications;
 import com.notification.service.infrastructure.mapper.NotificationEntityMapper;
 import com.notification.service.infrastructure.adapter.NotificationRepositoryAdapter;
 import com.notification.service.infrastructure.persistence.NotificationRecurrenceRepository;
 import com.notification.service.infrastructure.persistence.NotificationRepository;
+import com.notification.service.infrastructure.queue.listener.NotificationInstantListener;
+import com.notification.service.infrastructure.queue.listener.NotificationScheduledListener;
+import com.notification.service.infrastructure.schedule.SendBulkMailSchedule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -90,5 +94,39 @@ public class NotificationConfig {
     @Bean
     RecurrenceCalculator recurrenceCalculator() {
         return new RecurrenceCalculator();
+    }
+
+    @Bean
+    NotificationInstantListener notificationInstantListener(
+            SendInstantNotification sendInstantNotification
+    ) {
+        return new NotificationInstantListener(sendInstantNotification);
+    }
+
+    @Bean
+    NotificationScheduledListener notificationScheduledListener(
+            CreateNotification createNotification
+    ) {
+        return new NotificationScheduledListener(
+                createNotification
+        );
+    }
+
+    @Bean
+    SendScheduleNotifications sendScheduleNotifications(
+            MailSenderGateway mailSenderGateway
+    ) {
+        return new SendScheduleNotifications(
+                mailSenderGateway
+        );
+    }
+
+    @Bean
+    SendBulkMailSchedule sendBulkMailSchedule(
+            SendScheduleNotifications sendScheduleNotifications
+    ) {
+        return new SendBulkMailSchedule(
+                sendScheduleNotifications
+        );
     }
 }

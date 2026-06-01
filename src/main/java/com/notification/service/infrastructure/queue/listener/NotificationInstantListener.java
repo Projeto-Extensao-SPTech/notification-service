@@ -5,9 +5,7 @@ import com.notification.service.domain.entity.NotificationType;
 import com.notification.service.domain.usecases.notification.SendInstantNotification;
 import com.notification.service.infrastructure.config.rabbitmq.RabbitMQConfig;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
 
-@Component
 public class NotificationInstantListener {
 
     private final SendInstantNotification sendInstantNotification;
