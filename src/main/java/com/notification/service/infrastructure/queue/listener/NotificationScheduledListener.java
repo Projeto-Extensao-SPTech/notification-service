@@ -5,7 +5,6 @@ import com.notification.service.infrastructure.config.rabbitmq.RabbitMQConfig;
 import com.notification.service.domain.entity.Notification;
 import com.notification.service.domain.entity.NotificationType;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

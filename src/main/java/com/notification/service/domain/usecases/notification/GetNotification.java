@@ -6,7 +6,9 @@ import com.notification.service.domain.exception.notification.NotificationNotFou
 import com.notification.service.domain.gateway.NotificationRepositoryGateway;
 import com.notification.service.domain.entity.NotificationRecurrence;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,8 +21,13 @@ public class GetNotification {
     }
 
     public Page<NotificationResponse> execute(Pageable pageable) {
-        var response = notificationRepositoryGateway.findAll(pageable);
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "eventDate")
+        );
 
+        var response = notificationRepositoryGateway.findAll(sortedPageable);
         if (response.isEmpty()) {
             throw new NotificationNotFoundException("Não foi encontrada nenhuma notificação.");
         }
