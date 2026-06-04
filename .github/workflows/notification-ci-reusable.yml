@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: .github\workflows\Dockerfile
+          file: docker/Dockerfile
           push: false
           tags: gustapa/notification-service:dev-${{ steps.vars.outputs.short_sha }}
 
@@ -64,7 +64,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: .github\workflows\Dockerfile
+          file: docker/Dockerfile
           push: true
           tags: |
             gustapa/notification-service:latest
