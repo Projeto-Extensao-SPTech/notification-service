@@ -1,0 +1,16 @@
+name: Notification CI - MAIN
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  backend-ci:
+    uses: ./.github/workflows/notification-ci-reusable.yml
+    with:
+      branch_type: main
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
