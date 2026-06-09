@@ -27,7 +27,6 @@ public class NotificationEntity {
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
-    @Column(name = "fair_id")
     private Long fairId;
 
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -40,8 +39,7 @@ public class NotificationEntity {
 
     private String recipientMailAddress = null;
 
-    @Column(name = "event_date")
-    private LocalDate eventDate;
+    private LocalDate eventDate = null;
 
     private ZonedDateTime createdAt;
 
