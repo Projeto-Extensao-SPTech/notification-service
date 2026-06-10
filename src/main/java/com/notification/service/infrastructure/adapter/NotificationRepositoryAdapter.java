@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public class NotificationRepositoryAdapter implements NotificationRepositoryGateway {
@@ -66,6 +67,15 @@ public class NotificationRepositoryAdapter implements NotificationRepositoryGate
         return response
                 .map(NotificationRecurrenceEntity::getNotification)
                 .map(notificationEntityMapper::toDomainNotication);
+    }
+
+    @Override
+    public List<Notification> findNotificationRecurrences(LocalDate date) {
+        return notificationRecurrenceRepository.findByRecurrence(date)
+                .stream()
+                .map(NotificationRecurrenceEntity::getNotification)
+                .map(notificationEntityMapper::toDomainNotication)
+                .toList();
     }
 
     @Override

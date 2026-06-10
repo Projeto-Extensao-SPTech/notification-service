@@ -10,15 +10,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
 import java.util.List;
 
 public class MailSenderAdapter implements MailSenderGateway {
+
+    private final TemplateEngine templateEngine;
 
     private final JavaMailSender mailSender;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public MailSenderAdapter(JavaMailSender mailSender) {
+    public MailSenderAdapter(TemplateEngine templateEngine, JavaMailSender mailSender) {
+        this.templateEngine = templateEngine;
         this.mailSender = mailSender;
     }
 
@@ -34,13 +40,13 @@ public class MailSenderAdapter implements MailSenderGateway {
                 MimeMessage mimeMessage = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 helper.setTo(recipientMailAddress);
-                helper.setSubject(notification.getNotificationType().getDescription());
+                helper.setSubject(notification.getNotificationType().getToCustomer());
                 helper.setText(message, true);
                 mailSender.send(mimeMessage);
             } else {
                 SimpleMailMessage simpleMessage = new SimpleMailMessage();
                 simpleMessage.setTo(recipientMailAddress);
-                simpleMessage.setSubject(notification.getNotificationType().getDescription());
+                simpleMessage.setSubject(notification.getNotificationType().getToCustomer());
                 simpleMessage.setText(message);
                 mailSender.send(simpleMessage);
             }
@@ -62,11 +68,20 @@ public class MailSenderAdapter implements MailSenderGateway {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(recipients.toArray(new String[0]));
-            helper.setSubject(notification.getNotificationType().getDescription());
-            helper.setText(notification.getMessage(), true);
+            helper.setSubject(notification.getNotificationType().getToCustomer());
+            helper.setText(getBulkMailMessage(notification), true);
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new MailSenderException("Error sending bulk mail: " + e.getMessage());
         }
+    }
+
+    private String getBulkMailMessage(Notification notification) {
+        Context context = new Context();
+        context.setVariable("title", notification.getNotificationType().getToCustomer());
+        context.setVariable("message", notification.getMessage());
+        context.setVariable("siteUrl", "http://abrigodogfeliz.qzz.io");
+
+        return templateEngine.process("emails/general", context);
     }
 }

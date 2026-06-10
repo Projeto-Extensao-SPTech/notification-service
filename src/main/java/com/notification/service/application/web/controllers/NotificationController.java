@@ -13,6 +13,7 @@ import com.notification.service.domain.usecases.notification.GetNotification;
 import com.notification.service.domain.usecases.notification.GetNotificationById;
 import com.notification.service.domain.usecases.notification.GetNotificationByRecurrence;
 import com.notification.service.domain.usecases.notification.SendInstantNotification;
+import com.notification.service.domain.usecases.notification.SendScheduleNotifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +48,8 @@ public class NotificationController {
 
     private final NotificationMapperDTO notificationMapperDTO;
 
+    private final SendScheduleNotifications sendScheduleNotifications;
+
     public NotificationController(
             CreateNotification createNotificationUseCase,
             NotificationMapperDTO notificationMapperDTO,
@@ -54,7 +57,8 @@ public class NotificationController {
             GetNotificationByRecurrence getNotificationByRecurrence,
             DeleteNotification deleteNotification,
             GetNotification getNotification,
-            SendInstantNotification sendInstantNotification
+            SendInstantNotification sendInstantNotification,
+            SendScheduleNotifications sendScheduleNotifications
     ) {
         this.createNotificationUseCase = createNotificationUseCase;
         this.notificationMapperDTO = notificationMapperDTO;
@@ -63,6 +67,7 @@ public class NotificationController {
         this.deleteNotification = deleteNotification;
         this.getNotification = getNotification;
         this.sendInstantNotification = sendInstantNotification;
+        this.sendScheduleNotifications = sendScheduleNotifications;
     }
 
     @PostMapping("/schedule")
@@ -92,6 +97,11 @@ public class NotificationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(response);
+    }
+
+    @PostMapping("/send-bulk")
+    private void sendBulkNotifications() {
+        sendScheduleNotifications.execute();
     }
 
     @GetMapping("/{id}")

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.TemplateEngine;
+
 import java.util.Properties;
 
 @Configuration
@@ -43,8 +45,12 @@ public class MailSenderConfig {
 
     @Bean
     public MailSenderGateway mailSenderGateway(
-            JavaMailSender javaMailSender
+            JavaMailSender javaMailSender,
+            TemplateEngine templateEngine
     ) {
-        return new MailSenderAdapter(javaMailSender);
+        return new MailSenderAdapter(
+                templateEngine,
+                javaMailSender
+        );
     }
 }

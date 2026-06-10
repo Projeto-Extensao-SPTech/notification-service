@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title th:text="${title}">Notificação — Abrigo Dog Feliz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body style="margin:0;padding:0;background-color:#f0f2f5;font-family:'Baloo 2',Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f0f2f5;padding:32px 16px;">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+                <!-- Barra decorativa superior -->
+                <tr>
+                    <td style="background:linear-gradient(90deg,#052759 0%,#FCAD0B 50%,#052759 100%);height:4px;border-radius:12px 12px 0 0;font-size:0;line-height:0;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <!-- Header -->
+                <tr>
+                    <td style="background-color:#052759;padding:40px 32px 32px;text-align:center;">
+                        <table cellpadding="0" cellspacing="0" style="margin:0 auto 16px;">
+                            <tr>
+                                <td style="background-color:#FCAD0B;width:56px;height:56px;border-radius:50%;text-align:center;vertical-align:middle;">
+                                    <span style="font-size:26px;line-height:56px;">🐾</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="margin:0 0 10px;color:#FCAD0B;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">
+                            Abrigo Dog Feliz
+                        </p>
+                        <h1 th:text="${title}"
+                            style="margin:0;color:#ffffff;font-size:24px;font-weight:700;line-height:1.3;">
+                            Título da Notificação
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Card branco -->
+                <tr>
+                    <td style="background-color:#ffffff;padding:40px 32px 48px;text-align:center;">
+                        <p th:text="${message}"
+                           style="margin:0;font-size:15px;color:#4b5563;line-height:1.8;">
+                            Mensagem da notificação.
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#052759;padding:24px 28px;text-align:center;">
+                        <p style="margin:0 0 6px;color:#FCAD0B;font-size:13px;font-weight:700;">🐾 Abrigo Dog Feliz</p>
+                        <a th:href="${siteUrl}"
+                           style="color:rgba(255,255,255,0.65);font-size:12px;text-decoration:none;">abrigo-dog-feliz.com</a>
+                    </td>
+                </tr>
+
+                <!-- Barra decorativa inferior -->
+                <tr>
+                    <td style="background:linear-gradient(90deg,#052759 0%,#FCAD0B 50%,#052759 100%);height:4px;border-radius:0 0 12px 12px;font-size:0;line-height:0;">
+                        &nbsp;
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public interface NotificationRepositoryGateway {
@@ -15,6 +16,8 @@ public interface NotificationRepositoryGateway {
     Notification findById(Long id);
 
     Page<Notification> findNotificationRecurrences(LocalDate date, Pageable pageable);
+
+    List<Notification> findNotificationRecurrences(LocalDate date);
 
     Page<Notification> findAll(Pageable pageable);
 

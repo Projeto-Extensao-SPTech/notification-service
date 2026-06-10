@@ -3,6 +3,7 @@ package com.notification.service.infrastructure.config.notification;
 import com.notification.service.application.dto.NotificationMapperDTO;
 import com.notification.service.domain.gateway.MailSenderGateway;
 import com.notification.service.domain.gateway.NotificationRepositoryGateway;
+import com.notification.service.domain.gateway.UserServiceGateway;
 import com.notification.service.domain.service.RecurrenceCalculator;
 import com.notification.service.domain.usecases.notification.CreateNotification;
 import com.notification.service.domain.usecases.notification.DeleteNotification;
@@ -11,13 +12,14 @@ import com.notification.service.domain.usecases.notification.GetNotificationById
 import com.notification.service.domain.usecases.notification.GetNotificationByRecurrence;
 import com.notification.service.domain.usecases.notification.SendInstantNotification;
 import com.notification.service.domain.usecases.notification.SendScheduleNotifications;
-import com.notification.service.infrastructure.mapper.NotificationEntityMapper;
 import com.notification.service.infrastructure.adapter.NotificationRepositoryAdapter;
+import com.notification.service.infrastructure.adapter.UserServiceAdapter;
+import com.notification.service.infrastructure.client.UserServiceClient;
+import com.notification.service.infrastructure.mapper.NotificationEntityMapper;
 import com.notification.service.infrastructure.persistence.NotificationRecurrenceRepository;
 import com.notification.service.infrastructure.persistence.NotificationRepository;
 import com.notification.service.infrastructure.queue.listener.NotificationInstantListener;
 import com.notification.service.infrastructure.queue.listener.NotificationScheduledListener;
-import com.notification.service.infrastructure.schedule.SendBulkMailSchedule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -113,20 +115,24 @@ public class NotificationConfig {
     }
 
     @Bean
-    SendScheduleNotifications sendScheduleNotifications(
-            MailSenderGateway mailSenderGateway
+    UserServiceGateway userServiceGateway(
+            UserServiceClient userServiceClient
     ) {
-        return new SendScheduleNotifications(
-                mailSenderGateway
+        return new UserServiceAdapter(
+                userServiceClient
         );
     }
 
     @Bean
-    SendBulkMailSchedule sendBulkMailSchedule(
-            SendScheduleNotifications sendScheduleNotifications
+    SendScheduleNotifications sendScheduleNotifications(
+            MailSenderGateway mailSenderGateway,
+            NotificationRepositoryGateway notificationRepositoryGateway,
+            UserServiceGateway userServiceGateway
     ) {
-        return new SendBulkMailSchedule(
-                sendScheduleNotifications
+        return new SendScheduleNotifications(
+                mailSenderGateway,
+                notificationRepositoryGateway,
+                userServiceGateway
         );
     }
 }
