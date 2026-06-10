@@ -2,10 +2,10 @@ package com.notification.service.domain.entity;
 
 public enum NotificationType {
     FAIR("Feira de adoção se aproximando"),
-    DONATION("Precisamos de doações"),
+    DONATION("Chegou uma nova doação para o Abrigo Dog Feliz!"),
     GENERAL("Abrigo Dog Feliz quer falar com você"),
-    VOLUNTEER("Precisamos de voluntários"),
-    SPONSORSHIP("Precisamos de patrocínio"),
+    VOLUNTEER("Chegou uma nova oportunidade de voluntariado!"),
+    SPONSORSHIP("Chegou uma nova proposta de patrocinador!"),
     UPDATE_PASSWORD("Atualize sua senha");
 
     private final String description;
