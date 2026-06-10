@@ -24,6 +24,8 @@ public class Notification {
 
     private ZonedDateTime createdAt;
 
+    private Boolean clientVisible;
+
     private Notification() {}
 
     public static Notification scheduled(
@@ -43,6 +45,7 @@ public class Notification {
         notification.notificationRecurrences = recurrences;
         notification.recipientMailAddress = null;
         notification.createdAt = ZonedDateTime.now();
+        notification.clientVisible = true;
         return notification;
     }
 
@@ -59,6 +62,7 @@ public class Notification {
         notification.notificationRecurrences = List.of();
         notification.recipientMailAddress = recipientMailAddress;
         notification.createdAt = ZonedDateTime.now();
+        notification.clientVisible = false;
         return notification;
     }
 
@@ -107,10 +111,13 @@ public class Notification {
                 "id=" + id +
                 ", notificationType=" + notificationType +
                 ", fairId=" + fairId +
+                ", notificationRecurrences=" + notificationRecurrences +
                 ", eventId='" + eventId + '\'' +
+                ", message='" + message + '\'' +
+                ", recipientMailAddress='" + recipientMailAddress + '\'' +
                 ", eventDate=" + eventDate +
                 ", createdAt=" + createdAt +
-                ", recurrences=" + (notificationRecurrences != null ? notificationRecurrences.size() : 0) +
+                ", clientVisible=" + clientVisible +
                 '}';
     }
 
@@ -148,5 +155,9 @@ public class Notification {
 
     public String getEventId() {
         return eventId;
+    }
+
+    public Boolean getClientVisible() {
+        return clientVisible;
     }
 }

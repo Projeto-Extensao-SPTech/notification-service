@@ -19,7 +19,7 @@ public class GetNotification {
     }
 
     public Page<NotificationResponse> execute(Pageable pageable) {
-        var response = notificationRepositoryGateway.findAll(pageable);
+        var response = notificationRepositoryGateway.findAllByClientVisibleTrue(pageable);
 
         if (response.isEmpty()) {
             throw new NotificationNotFoundException("Não foi encontrada nenhuma notificação.");

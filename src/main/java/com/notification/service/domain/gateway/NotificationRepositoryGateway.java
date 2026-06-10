@@ -23,4 +23,6 @@ public interface NotificationRepositoryGateway {
     boolean existsByEventId(String eventId);
 
     Notification findByEventId(String eventId);
+
+    Page<Notification> findAllByClientVisibleTrue(Pageable pageable);
 }

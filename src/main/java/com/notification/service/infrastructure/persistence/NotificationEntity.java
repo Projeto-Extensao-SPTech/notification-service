@@ -43,6 +43,8 @@ public class NotificationEntity {
 
     private ZonedDateTime createdAt;
 
+    private Boolean clientVisible = false;
+
     protected NotificationEntity() {}
 
     public NotificationEntity(
@@ -52,7 +54,8 @@ public class NotificationEntity {
             String recipientMailAddress,
             LocalDate eventDate,
             ZonedDateTime createdAt,
-            String eventId
+            String eventId,
+            Boolean clientVisible
     ) {
         this.notificationType = notificationType;
         this.fairId = fairId;
@@ -61,6 +64,7 @@ public class NotificationEntity {
         this.eventDate = eventDate;
         this.createdAt = createdAt;
         this.eventId = eventId;
+        this.clientVisible = clientVisible;
     }
 
     public void addRecurrence(NotificationRecurrenceEntity recurrence) {
@@ -106,5 +110,9 @@ public class NotificationEntity {
 
     public String getEventId() {
         return eventId;
+    }
+
+    public Boolean getClientVisible() {
+        return clientVisible;
     }
 }

@@ -66,7 +66,6 @@ public class NotificationRepositoryAdapter implements NotificationRepositoryGate
         return response
                 .map(NotificationRecurrenceEntity::getNotification)
                 .map(notificationEntityMapper::toDomainNotication);
-
     }
 
     @Override
@@ -89,5 +88,11 @@ public class NotificationRepositoryAdapter implements NotificationRepositoryGate
         return notificationRepository.findByEventId(eventId)
                 .map(notificationEntityMapper::toDomainNotication)
                 .orElse(null);
+    }
+
+    @Override
+    public Page<Notification> findAllByClientVisibleTrue(Pageable pageable) {
+        return notificationRepository.findAllByClientVisibleTrue(pageable)
+                .map(notificationEntityMapper::toDomainNotication);
     }
 }
